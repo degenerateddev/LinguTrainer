@@ -1,0 +1,203 @@
+#:kivy 1.11.0
+#:import MDTextField kivymd.textfields.MDTextField
+#:import MDTextFieldRound kivymd.textfields.MDTextFieldRound
+#:import MDTextFieldClear kivymd.textfields.MDTextFieldClear
+#:import MDTextFieldRect kivymd.textfields.MDTextFieldRect
+#:import MDRectangleFlatButton kivymd.button.MDRectangleFlatButton
+#:import MDCard kivymd.card.MDCard
+#:import MDCheckbox kivymd.selectioncontrols.MDCheckbox
+#:import MDNavigationDrawer kivymd.navigationdrawer.MDNavigationDrawer
+#:import NavigationLayout kivymd.navigationdrawer.NavigationLayout
+#:import NavigationDrawerDivider kivymd.navigationdrawer.NavigationDrawerDivider
+#:import NavigationDrawerToolbar kivymd.navigationdrawer.NavigationDrawerToolbar
+#:import NavigationDrawerSubheader kivymd.navigationdrawer.NavigationDrawerSubheader
+#:import MDToolbar kivymd.toolbar.MDToolbar
+#:import MDList kivymd.list.MDList
+#:import OneLineAvatarIconListItem kivymd.list.OneLineAvatarIconListItem
+#:import MyAvatar modules.myavatar.MyAvatar
+#:import MyCheckbox modules.mycheckbox.MyCheckbox
+
+<ListItemWithCheckbox@OneLineAvatarIconListItem>:
+    msg: ''
+    box: ''
+    MyAvatar:
+        source: 'src/hdl.jpg'
+    MyCheckbox:
+        on_active: app.root.setLanguage(root.msg, 'screen_main', root.box)
+
+<ContentNavigationDrawer@MDNavigationDrawer>:
+    drawer_logo: 'src/hdl.jpg'
+
+    NavigationDrawerSubheader:
+        text: "Menu:"
+
+<LayoutPy>:
+    orientation: 'vertical'
+    scr_mngr: scr_mngr
+    total: 0
+    right: 0
+
+    NavigationLayout:
+        id: nav_layout
+
+        ContentNavigationDrawer:
+            id: nav_drawer
+            name: 'nav_drawer'
+
+            NavigationDrawerIconButton:
+                id: settings
+                icon: 'settings'
+                text: 'Select Language'
+                on_release: root.open2ndScreen('screen_card')
+
+            NavigationDrawerIconButton:
+                icon: 'face'
+                text: 'Contact the developer'
+                on_release: root.Popup(True, 'Contact', 'Please send me some feedback!', 'Feedback sent')
+
+            NavigationDrawerIconButton:
+                icon: 'file'
+                text: 'Add your own wordlists'
+                on_release: root.add_Own_Wordlist()
+
+            NavigationDrawerIconButton:
+                icon: 'close'
+                text: 'Exit'
+                on_release: root.exit()
+
+        BoxLayout:
+            orientation: 'vertical'
+
+            MDToolbar:
+                id: toolbar
+                title: 'Menu'
+                md_bg_color: app.theme_cls.primary_color
+                background_palette: 'Primary'
+                background_hue: '500'
+                elevation: 10
+                left_action_items: [['dots-vertical', lambda x: root.hide_screen()]]
+
+            Widget:
+
+    ScreenManager:
+        id: scr_mngr
+        screen_main: screen_main
+
+        Screen:
+            id: screen_main
+            name: 'screen_main'
+            input_words: input_words
+            lbl: right_false_lbl
+            btn: btn
+
+            FloatLayout:
+                id: voc_content
+
+                MDLabel:
+                    id: ads_lbl
+                    font_size: 15
+                    size_hint: None, None
+                    pos_hint: {'left': 0.8, 'bottom': 0.95}
+
+                MDLabel:
+                    id: right_false_lbl
+                    font_size: 15
+                    size_hint: None, None
+                    pos_hint: {'x': 0.7, 'top': 0.85}
+                    canvas:
+
+                MDLabel:
+                    id: counter_lbl
+                    font_size: 15
+                    size_hint: None, None
+                    pos_hint: {'left': 0.9,'top': 0.2}
+
+                MDSeparator:
+                    pos_hint: {'x': 0.15, 'top': 0.3}
+                    size_hint: 0.7, 0.001
+
+                MDTextField:
+                    id: input_words
+                    visible: True
+                    hint_text: 'Insert translation'
+                    helper_text_mode: 'on_focus'
+                    font_size: 30
+                    size_hint: 0.5, 0.12
+                    pos_hint: {'x': 0.25, 'top': 0.6}
+                    disabled: not self.visible
+
+                MDRectangleFlatButton:
+                    id: btn
+                    text: 'Check'
+                    opposite_colors: True
+                    font_size: 30
+                    size_hint: 0.25, 0.1
+                    pos_hint: {'right': 0.63, 'top': 0.2}
+                    on_press: root.check(root.total, root.right)
+
+                MDRectangleFlatButton:
+                    id: switch_btn
+                    text: 'Switch languages'
+                    opposite_colors: True
+                    font_size: 15
+                    size_hint: 0.25, 0.05
+                    pos_hint: {'right': 0.63, 'top': 0.1}
+                    on_press: root.Switch_Languages()
+
+                MDLabel:
+                    id: language_label
+                    font_size: 15
+                    size_hint: None, None
+                    pos_hint: {'right': 0.9,'top': 0.2}
+
+        Screen:
+            id: screen_card
+            name: 'screen_card'
+
+            FloatLayout:
+
+                MDCard:
+                    #size_hint: None, None
+                    #size: dp(500), dp(350)
+                    size_hint: .8, .5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: 20
+                        name: 'lists'
+
+                        ScrollView:
+
+                            MDList:
+                                id: scroll
+
+                                ListItemWithCheckbox:
+                                    id: ckbxe
+                                    text: 'English to German'
+                                    msg: 'English'
+                                    box: 'ckbxe'
+
+                                ListItemWithCheckbox:
+                                    id: ckbxg
+                                    text: 'German to English'
+                                    msg: 'German'
+                                    box: 'ckbxg'
+
+                                ListItemWithCheckbox:
+                                    id: ckbxs
+                                    text: 'Spanish to English'
+                                    msg: 'Spanish'
+                                    box: 'ckbxs'
+
+                                ListItemWithCheckbox:
+                                    id: ckbxhv
+                                    text: 'High Valyrian to German'
+                                    msg: 'High Valyrian'
+                                    box: 'ckbxhv'
+
+        Screen:
+            id: hidden_screen
+            name: 'hidden_screen'
+
+            FloatLayout:

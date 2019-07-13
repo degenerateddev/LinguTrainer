@@ -1,0 +1,16 @@
+kirine = froehlich
+vala = Mann
+issa, kessa = ist, Ja
+nuha = mein
+muna = Mutter
+kepa = Vater
+abra = Frau
+taoba = Junge
+rina = Maedchen
+iksan = Ich bin
+se = und
+iksa = Du bist
+daor = Nein
+jiorna = Willkommen
+Rytsas = Hallo
+biarvose = Bitte

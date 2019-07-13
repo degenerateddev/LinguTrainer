@@ -1,0 +1,6 @@
+itinerary = reiseplan
+pollution = verschmutzung
+contamination = kontaminierung
+landfill site = muelldeponie
+waste disposal system = abfall entsorgungssystem
+economic = oekonomisch
